@@ -21,7 +21,7 @@ public class FileController {
         InputStreamReader reader = new InputStreamReader(file.getInputStream());
         StringBuilder builder = new StringBuilder();
         while(reader.ready()) {
-            builder.append(reader.read());
+            builder.append((char)reader.read());
         }
         return builder.toString();
         /* Here is some example code of how you might start parsing the JSON in order to understand the flat file
