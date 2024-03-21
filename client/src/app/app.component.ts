@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -31,26 +31,44 @@ export class AppComponent {
       alert("No file selected!");
       return;
     }
+    //I don't know why intellisense thinks we can't do this, but it gives an error, try it out.
+    // let options = {
+    //   observe: "response",
+    //   responseType: 'text',
+    //   headers: new HttpHeaders({
+    //     username: "kplummer"//for our trusting system
+    //   })
+    // }
+
+    let url = "http://localhost:8080/file"
 
     let form: FormData = new FormData();
     form.append("file", this.file);
-    let response = this.httpClient.post("http://localhost:8080/file", form, {
+    
+    let options: Object = {
       observe: "response",
       responseType: 'text',
-      headers: {
+      headers: new HttpHeaders({
         username: "kplummer"//for our trusting system
-      }
-    });
+      })
+    }
+    
+    let response = this.httpClient.post(url, form, options);
+
+
     response.subscribe({
-      next: (data) => {
+      next: (data: any) => {
         console.log("data: ", data);
-        let fileName: string | null = "file.txt";
+        let fileName: string | null = "file.txt"; 
         let fileBody: string | null = data.body;
         this.downloadFile = new Blob([fileBody as string], {type: "text/plain"});
       },
       error: (error: HttpErrorResponse) => {
         console.log("error: ", error);
         alert(error.message);
+      },
+      complete: () => {
+        console.log("Http response complete!")
       }
     });
   }
