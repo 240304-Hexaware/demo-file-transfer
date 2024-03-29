@@ -46,21 +46,27 @@ export class AppComponent {
     form.append("file", this.file);
     
     let options: Object = {
+      withCredentials: true,
       observe: "response",
       responseType: 'text',
       headers: new HttpHeaders({
-        username: "kplummer"//for our trusting system
+        username: "kplummer",//for our trusting system
       })
     }
     
     let response = this.httpClient.post(url, form, options);
-
 
     response.subscribe({
       next: (data: any) => {
         console.log("data: ", data);
 
         //We can view the headers from the response, which come in the form of a map.
+        /*
+        IMPORTANT! In order to see ALL headers you must expose them on the server side. 
+        See the server app of this project, particularly the @CrossOrigin annotation on the
+        controller. It "exposes" the authorization header, if that isn't present even if the 
+        header is present in the response, you won't see it here.
+        */
         let respHeaders = data.headers;
         let keys = respHeaders.keys();
         for(let key of keys) {
