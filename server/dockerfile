@@ -1,0 +1,4 @@
+FROM openjdk:17-alpine
+COPY ./target/demo-file-transfer-0.1a.jar ./demo-file-transfer-0.1a.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "demo-file-transfer-0.1a.jar"]

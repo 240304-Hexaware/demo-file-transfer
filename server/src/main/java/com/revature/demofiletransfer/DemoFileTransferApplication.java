@@ -15,12 +15,12 @@ public class DemoFileTransferApplication {
 
 
 
-//		File path = new File("test");
-//		File file = new File("test\\document.txt");
-//		path.mkdir();
-//		FileWriter fileWriter = new FileWriter(file);
-//		fileWriter.append("Hello!");
-//		fileWriter.close();
+		File path = new File("test");
+		File file = new File("test\\document.txt");
+		path.mkdir();
+		FileWriter fileWriter = new FileWriter(file);
+		fileWriter.append("Hello!");
+		fileWriter.close();
 
 	}
 
